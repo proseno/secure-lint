@@ -22,8 +22,8 @@
 ### **Setup**
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/secure-code-analyzer.git
-   cd secure-code-analyzer
+   git clone https://github.com/proseno/secure-lint
+   cd secure-lint
    ```
 
 2. Install dependencies:
