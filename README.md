@@ -44,7 +44,7 @@ To analyze Go and Python projects, use the following commands:
 
 **Go Analysis**:
    ```bash
-   go run main.go ./examples
+   go run main.go analyze --path="examples"
    ```
 
 ---
