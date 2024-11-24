@@ -1,13 +1,12 @@
 analyzers:
   -
     command: "gosec"
-#    flags: "-out=\"output/gosec.txt\""
-    flags: "-out=\"gosec.txt\""
+    output_flag: "-out"
     install_command: "go install github.com/securego/gosec/v2/cmd/gosec@latest"
   -
     command: "bandit"
-#    flags: "-r"
-    flags: "-r --output=\"output/bandit.txt\" -f txt"
+    flags: "-r"
+    output_flag: "--output"
     install_command: "pip install bandit"
 #  -
 #    command: "eslint"

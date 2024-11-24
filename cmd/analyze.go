@@ -5,6 +5,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"secure-lint/pkg/analyzer"
 	"secure-lint/pkg/config"
+	"secure-lint/pkg/models"
 )
 
 func AnalyzeCommand(config *config.Config) *cli.Command {
@@ -21,6 +22,7 @@ func AnalyzeCommand(config *config.Config) *cli.Command {
 		},
 		Action: func(c *cli.Context) error {
 			path := c.String("path")
+			path = models.ProjectRoot + "/" + path
 			fmt.Printf("Analyzing code at path: %s\n", path)
 			analyzer.AnalyzeCode(path, config)
 			return nil
