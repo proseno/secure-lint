@@ -48,6 +48,10 @@ func AnalyzeCode(path string, config *config.Config) {
 	for _, analyzer := range config.Analyzers {
 
 		if analyzer.CheckExecutable() {
+			if analyzer.Stdout != "" {
+				result := analyzer.Analyze(path)
+				fmt.Println(result)
+			}
 			analyzer.Analyze(path)
 		}
 	}

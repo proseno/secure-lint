@@ -12,7 +12,10 @@ type Analyzer struct {
 	Command        string `yaml:"command"`
 	Flags          string `yaml:"flags"`
 	OutputFlag     string `yaml:"output_flag"`
+	Stdout         string `yaml:"stdout"`
+	Level          string `yaml:"level"`
 	InstallCommand string `yaml:"install_command"`
+	As             string `yaml:"as"`
 }
 
 func (a *Analyzer) Install() ([]byte, error) {
@@ -70,14 +73,17 @@ func recreateFile(filename string) {
 }
 
 func (a *Analyzer) getOutputFlag() string {
-	var outputFile = ProjectRoot + "/output/" + a.Command + ".txt"
-	recreateFile(outputFile)
-	return a.OutputFlag + "=" + outputFile
+	if a.OutputFlag != "" {
+		var outputFile = ProjectRoot + "/output/" + a.As + ".txt"
+		recreateFile(outputFile)
+		return a.OutputFlag + "=" + outputFile
+	}
+	return a.OutputFlag
 }
 
 func (a *Analyzer) PrepareCommandArgs(path string) []string {
 	var result []string
-	args := []string{a.Flags, a.getOutputFlag(), path}
+	args := []string{a.Flags, a.getOutputFlag(), a.Level, path}
 	for _, arg := range args {
 		if arg != "" {
 			result = append(result, arg)
@@ -92,8 +98,6 @@ func (a *Analyzer) Analyze(path string) string {
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 
-	//ignore err
-	//in case stdout have analysis then err isn't empty
 	fmt.Printf("Executing %s\n", cmd.String())
 	stdout, err := cmd.Output()
 	if err != nil {

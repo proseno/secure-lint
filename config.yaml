@@ -3,16 +3,10 @@ analyzers:
     command: "gosec"
     output_flag: "-out"
     install_command: "go install github.com/securego/gosec/v2/cmd/gosec@latest"
+    as: "go"
   -
     command: "bandit"
     flags: "-r"
     output_flag: "--output"
     install_command: "pip install bandit"
-#  -
-#    command: "eslint"
-#    flags: ""
-#    install_command: "npm install -g eslint"
-#  -
-#    command: "phpstan"
-#    flags: ""
-#    install_command: "composer global require phpstan/phpstan"
+    as: "python"
