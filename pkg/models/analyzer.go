@@ -71,7 +71,7 @@ func recreateFile(filename string) {
 
 func (a *Analyzer) getOutputFlag() string {
 	var outputFile = ProjectRoot + "/output/" + a.Command + ".txt"
-	//recreateFile(outputFile)
+	recreateFile(outputFile)
 	return a.OutputFlag + "=" + outputFile
 }
 
