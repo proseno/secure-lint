@@ -18,14 +18,17 @@ func HardcodedCredentials() {
 }
 
 func SqlInjections() {
-	db, err := sql.Open("postgres", "user=admin password=supersecret dbname=test sslmode=disable")
+	db, err := sql.Open("postgres",
+		"user=admin password=supersecret dbname=test sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
 
 	userInput := "'; DROP TABLE users; --"
-	query := fmt.Sprintf("SELECT * FROM users WHERE username='%s'", userInput) // SQL Injection
+	query := fmt.Sprintf(
+		"SELECT * FROM users WHERE username='%s'",
+		userInput) // SQL Injection
 	rows, err := db.Query(query)
 	if err != nil {
 		panic(err)

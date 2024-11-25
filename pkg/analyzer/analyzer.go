@@ -44,16 +44,32 @@ func outputReport() {
 	fmt.Println(gatherReport())
 }
 
-func AnalyzeCode(path string, config *config.Config) {
-	for _, analyzer := range config.Analyzers {
+func runAnalyzer(analyzer *models.Analyzer, path string) {
+	if analyzer.CheckExecutable() {
+		if analyzer.Stdout != "" {
+			result := analyzer.Analyze(path)
+			fmt.Println(result)
+		}
+		analyzer.Analyze(path)
+	}
+}
 
-		if analyzer.CheckExecutable() {
-			if analyzer.Stdout != "" {
-				result := analyzer.Analyze(path)
-				fmt.Println(result)
+func AnalyzeCode(path string, config *config.Config, langs []string) {
+	if len(langs) == 0 {
+		for _, analyzer := range config.Analyzers {
+			runAnalyzer(&analyzer, path)
+		}
+	} else {
+		for _, lang := range langs {
+			analyzer, err := config.GetByLang(lang)
+			if err != nil {
+				fmt.Printf("Error getting language: %v\n", err)
+				continue
 			}
-			analyzer.Analyze(path)
+
+			runAnalyzer(analyzer, path)
 		}
 	}
+
 	outputReport()
 }

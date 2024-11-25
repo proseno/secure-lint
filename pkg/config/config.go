@@ -28,3 +28,12 @@ func LoadConfig(filePath string) (*Config, error) {
 
 	return &config, nil
 }
+
+func (c *Config) GetByLang(lang string) (*models.Analyzer, error) {
+	for _, analyzer := range c.Analyzers {
+		if analyzer.As == lang {
+			return &analyzer, nil
+		}
+	}
+	return nil, fmt.Errorf("analyzer for language %s not found in config", lang)
+}
